@@ -20,3 +20,9 @@ export \
 	RADV_FORCE_VRS=2x2 RADV_DEBUG=novrsflatshading \
 	TIME_STYLE=long-iso \
 	QT_WAYLAND_RECONNECT=1
+
+if (( ! $+SSH_AUTH_SOCK )) {
+	for sock_path ( $XDG_RUNTIME_DIR/ssh-agent.socket ${PREFIX}/var/run/ssh-agent ) {
+		[[ -S $sock_path ]] && export SSH_AUTH_SOCK=$sock_path
+	}
+}
