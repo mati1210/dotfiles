@@ -123,7 +123,7 @@ autoload -U edit-command-line
 zle -N edit-command-line
 bindkey '^[e'  edit-command-line              # Alt-e
 
-for file ( ${PREFIX:-/usr}{/share/fzf,/share/doc/fzf/examples}/key-bindings.zsh ) {
+for file ( ${PREFIX:-/usr}{/share/fzf{,/shell},/share/doc/fzf/examples}/key-bindings.zsh ) {
 	if [[ -f $file ]] {
 		source $file
 		__has_fzf=1
