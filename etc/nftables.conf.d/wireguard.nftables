@@ -2,7 +2,7 @@
 add rule inet main udp_chain udp dport 51820 accept
 add rule inet main forward iifname "wg0" accept
 
-table inet wireguard {
+table inet main {
   chain postrouting {
     type nat hook postrouting priority filter
 
