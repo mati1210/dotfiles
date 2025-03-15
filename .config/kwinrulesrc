@@ -1,0 +1,11 @@
+[1]
+Description=No border
+noborder=true
+noborderrule=3
+types=1
+windowrole=renderer
+wmclasscomplete=true
+
+[General]
+count=1
+rules=1
