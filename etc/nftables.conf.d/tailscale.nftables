@@ -1,2 +1,12 @@
 #!/bin/nft -f
-add element inet main LANv4 { 100.64.0.0/10 }
+define tailscale_range = 100.64.0.0/10
+add element inet main LANv4 { $tailscale_range }
+
+add rule inet main forward iifname "tailscale0" accept
+table inet ts {
+  chain postrouting {
+    type nat hook postrouting priority filter
+
+    ip saddr $tailscale_range ip daddr != $tailscale_range masquerade
+  }
+}
