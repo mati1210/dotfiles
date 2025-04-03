@@ -7,7 +7,10 @@ eval "$(zoxide init zsh)"
 
 # history
 setopt extendedhistory appendhistory histignore{dups,space} sharehistory histverify
-if [[ -e $XDG_CACHE_HOME/zsh_history ]] { mv -v $XDG_CACHE_HOME/zsh_history $XDG_STATE_HOME/history/zsh }
+if [[ -e $XDG_CACHE_HOME/zsh_history && ! -e $XDG_STATE_HOME/history/zsh ]] {
+	mkdir -p $XDG_STATE_HOME/history
+	mv -v $XDG_CACHE_HOME/zsh_history $XDG_STATE_HOME/history/zsh
+}
 : ${HISTFILE:=$XDG_STATE_HOME/history/zsh}
 HISTSIZE=500000
 SAVEHIST=100000
