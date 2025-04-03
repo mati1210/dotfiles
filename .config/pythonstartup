@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # like mostly taken from github.com/grawity/dotfiles
 import os, sys
+from pathlib import Path
 
 
 def _init_():
@@ -20,7 +21,8 @@ def _init_():
 
     readline.read_init_file()
     readline.parse_and_bind("tab: complete")
-    hist_file = os.path.expanduser("~/.cache/python.history")
+    state_dir = Path(os.getenv("XDG_STATE_HOME") or Path.home() / ".local/state/")
+    hist_file = state_dir / "history/python"
     if os.path.exists(hist_file):
         readline.read_history_file(hist_file)
     atexit.register(lambda: readline.write_history_file(hist_file))
