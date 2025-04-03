@@ -17,6 +17,7 @@ export \
 	WINEPREFIX=~/.local/wine \
 	LESSHISTFILE=- \
 	SQLITE_HISTORY=$XDG_STATE_HOME/history/sqlite \
+	NODE_REPL_HISTORY=$XDG_STATE_HOME/history/node \
 	EDITOR=nano PAGER="bat -p" MANGOHUD=1 \
 	RADV_FORCE_VRS=2x2 RADV_DEBUG=novrsflatshading \
 	TIME_STYLE=long-iso \
