@@ -6,7 +6,7 @@ setopt autocd autopushd pushdignoredups pushdminus
 eval "$(zoxide init zsh)"
 
 # history
-setopt extendedhistory appendhistory histignore{dups,space} sharehistory histverify
+setopt extendedhistory appendhistory histignore{alldups,space} sharehistory histverify
 if [[ -e $XDG_CACHE_HOME/zsh_history && ! -e $XDG_STATE_HOME/history/zsh ]] {
 	mkdir -p $XDG_STATE_HOME/history
 	mv -v $XDG_CACHE_HOME/zsh_history $XDG_STATE_HOME/history/zsh
