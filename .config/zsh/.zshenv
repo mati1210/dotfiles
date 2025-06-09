@@ -21,7 +21,8 @@ export \
 	EDITOR=nano PAGER="bat -p" MANGOHUD=1 \
 	RADV_FORCE_VRS=2x2 RADV_DEBUG=novrsflatshading \
 	TIME_STYLE=long-iso \
-	QT_WAYLAND_RECONNECT=1
+	QT_WAYLAND_RECONNECT=1 \
+	clasp_config_auth=$XDG_CONFIG_HOME/clasprc.json
 
 if (( ! $+SSH_AUTH_SOCK )) {
 	for sock_path ( $XDG_RUNTIME_DIR/ssh-agent.socket ${PREFIX}/var/run/ssh-agent ) {
