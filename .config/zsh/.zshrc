@@ -78,6 +78,10 @@ for util ( stat math color ) {
 	source $ZDOTDIR/utils/$util.zsh
 }
 
+function mdecho {
+	mkdir -p $@ && echo $@[-1]
+}
+
 if (( $+commands[bw] )) {
 	for cmd ( ssh{,-add} git bw ) {
 		alias $cmd="BW_SESSION=\$BW_SESSION $cmd"
