@@ -78,6 +78,16 @@ for util ( stat math color ) {
 	source $ZDOTDIR/utils/$util.zsh
 }
 
+if (( $+commands[bw] )) {
+	for cmd ( ssh{,-add} git bw ) {
+		alias $cmd="BW_SESSION=\$BW_SESSION $cmd"
+	}
+
+	if (( ! $+SSH_ASKPASS )) {
+		export SSH_ASKPASS=bw-sshaskpass SSH_ASKPASS_REQUIRE=force
+	}
+}
+
 ## Prompts
 REPORTTIME=5
 TIMEFMT="$BG[black]$FG[blue] ⌚$FX[reset] %*Es"
