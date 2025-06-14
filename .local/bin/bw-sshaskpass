@@ -1,4 +1,10 @@
 #!/bin/zsh
-read -rqt 2 '?Would you like to use bitwarden for ssh key password? [y/N] ' && { echo 1>&2 ; exec bw get password "ssh $HOST key" }
-read -sre '?
-Enter password... '
+e() { echo $@ 1>&2 }
+prompt=$1
+e $prompt
+
+if [[ $prompt[1,16] == "Enter passphrase" ]] {
+	read -rqt 2 '?Would you like to use bitwarden for ssh key password? [y/N] ' && { e; exec bw get password "ssh $HOST key" }
+	e
+}
+read -sre '?--> '
