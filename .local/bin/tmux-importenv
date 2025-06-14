@@ -1,0 +1,4 @@
+#!/bin/zsh
+for var ( $(typeset +x)  ) {
+	tmux setenv -g ${var} ${(P)var}
+}
