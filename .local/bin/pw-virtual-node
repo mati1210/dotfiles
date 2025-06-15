@@ -1,0 +1,24 @@
+#!/bin/zsh
+case $TYPE in
+	mic) class=Audio/Source/Virtual type=sources;;
+	speaker) class=Audio/Sink type=sinks;;
+	*) echo no type!; exit 1;;
+esac
+
+nodes=(
+	$(pactl list $type short|cut -f2)
+)
+
+for node ( $@ ) {
+    # if already exists, ignore
+    (( $nodes[(Ie)$node] )) && continue
+
+    args=(
+        load-module module-null-sink
+
+        media.class=$class
+        sink_name=$node
+    )
+    if (( MONO )) { args+="channels=1" }
+    pactl $args
+}
