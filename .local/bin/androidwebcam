@@ -1,0 +1,31 @@
+#!/bin/zsh
+: ${VID:=1}
+: ${MICPREFIX:=androidmic}
+: ${SSHHOST:=phone}
+
+# setup microphone
+MONO=1 TYPE=speaker pw-virtual-node $MICPREFIX-in
+MONO=1 TYPE=mic pw-virtual-node $MICPREFIX-out
+pw-link androidmic-in androidmic-out
+outargs=( -avioflags direct )
+
+if (( VID )) {
+	module=v4l2loopback
+	(lsmod|grep -q $module) || sudo modprobe $module
+
+	sdp_prefix=h264_
+	vidargs=( $outargs -map v -f v4l2 /dev/video0 )
+} else {
+	sdp_prefix=''
+	vidargs=( )
+}
+
+# this only works if you patch the app to set the Rolling activity exportable
+ssh $SSHHOST am start -n com.pas.webcam/.Rolling
+sleep 1 # wait for app to open up
+
+ffmpeg \
+	-fflags nobuffer -flags low_delay \
+	-i rtsp://$(ssh -G $SSHHOST| awk '$1 == "hostname" { print $2 }'):8080/${sdp_prefix}opus.sdp \
+	$outargs -map a -f pulse -device $MICPREFIX-in androidwebcam \
+	$vidargs
