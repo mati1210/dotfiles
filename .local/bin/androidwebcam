@@ -1,7 +1,8 @@
 #!/bin/zsh
 : ${VID:=1}
 : ${MICPREFIX:=androidmic}
-: ${SSHHOST:=phone}
+: ${ANDROIDSSHHOST:=phone}
+: ${ANDROIDPORT:=8545}
 
 # setup microphone
 MONO=1 TYPE=speaker pw-virtual-node $MICPREFIX-in
@@ -20,12 +21,17 @@ if (( VID )) {
 	vidargs=( )
 }
 
-# this only works if you patch the app to set the Rolling activity exportable
-ssh $SSHHOST am start -n com.pas.webcam/.Rolling
-sleep 1 # wait for app to open up
+ANDROIDIP="$(ssh -G $ANDROIDSSHHOST| awk '$1 == "hostname" { print $2 }')"
+
+# check if ip webcam already running
+if ! ncat -vw1 $ANDROIDIP $ANDROIDPORT </dev/null; then
+	# this only works if you patch the app to set the Rolling activity exportable
+	ssh $ANDROIDSSHHOST am start -n com.pas.webcam/.Rolling
+	sleep 1 # wait for app to open up
+fi
 
 ffmpeg \
 	-fflags nobuffer -flags low_delay \
-	-i rtsp://$(ssh -G $SSHHOST| awk '$1 == "hostname" { print $2 }'):8080/${sdp_prefix}opus.sdp \
+	-i rtsp://$ANDROIDIP:$ANDROIDPORT/${sdp_prefix}opus.sdp \
 	$outargs -map a -f pulse -device $MICPREFIX-in androidwebcam \
 	$vidargs
