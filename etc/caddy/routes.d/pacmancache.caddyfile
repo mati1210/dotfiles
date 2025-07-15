@@ -1,0 +1,5 @@
+import fileserver /pkg /var/cache/pacman/pkg {
+	pre {
+		import empty
+	}
+}

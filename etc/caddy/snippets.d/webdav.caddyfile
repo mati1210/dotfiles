@@ -1,0 +1,24 @@
+(webdav) {
+	redir {args[0]} {args[0]}/ 301
+	route {args[0]}/* {
+		@dav method PROPFIND 
+		{blocks.pre}
+		uri strip_prefix {args[0]}
+		webdav @dav {
+			root {args[1]}
+		}
+		file_server browse {
+			root {args[1]}
+		}
+	}
+}
+
+(webdav-ro) {
+	import webdav {args[0]} {args[1]} {
+		pre {
+			@rw not method GET HEAD OPTIONS PROPFIND
+			respond @rw "writer no writing!" 405 
+			{blocks.pre}
+		}
+	}
+}
