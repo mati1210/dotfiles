@@ -1,2 +1,0 @@
-#!/bin/nft -f
-add rule inet main tcp_chain tcp dport 19806 accept
