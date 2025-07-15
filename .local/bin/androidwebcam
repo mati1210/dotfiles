@@ -32,6 +32,7 @@ fi
 
 ffmpeg \
 	-fflags nobuffer -flags low_delay \
+	-hwaccel vaapi -hwaccel_device /dev/dri/renderD128 \
 	-i rtsp://$ANDROIDIP:$ANDROIDPORT/${sdp_prefix}opus.sdp \
 	$outargs -map a -f pulse -device $MICPREFIX-in androidwebcam \
 	$vidargs
