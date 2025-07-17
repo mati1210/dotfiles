@@ -11,6 +11,7 @@ import /etc/caddy/snippets.d/*
 log
 encode
 
+header Strict-Transport-Security "max-age=2592000"
 import /etc/caddy/routes.d/*
 
 respond "idk man" 400
