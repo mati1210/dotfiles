@@ -7,9 +7,7 @@
 		webdav @dav {
 			root {args[1]}
 		}
-		file_server browse {
-			root {args[1]}
-		}
+		import fs {args[1]}
 	}
 }
 

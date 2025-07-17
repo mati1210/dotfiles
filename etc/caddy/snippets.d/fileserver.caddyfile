@@ -1,10 +1,15 @@
+(fs) {
+	file_server {
+		browse {$BROWSETEMPLATE}
+		root {args[0]}
+		precompressed
+	}
+}
+
 (fileserver) {
 	redir {args[0]} {args[0]}/ 301
 	handle_path {args[0]}/* {
 		{blocks.pre}
-		file_server browse {
-			root {args[1]}
-			precompressed
-		}
+		import fs {args[1]}
 	}
 }
