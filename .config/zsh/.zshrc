@@ -177,6 +177,6 @@ ZSH_HIGHLIGHT_STYLES[dollar-quoted-argument]='fg=cyan,bold'
 ZSH_HIGHLIGHT_STYLES[back-double-quoted-argument]='fg=magenta,bold'
 
 
-ZSH_HIGHLIGHT_STYLES[cursor]='standout'
+ZSH_HIGHLIGHT_STYLES[cursor]='bold'
 
 . $ZDOTDIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
