@@ -1,5 +1,0 @@
-import webdav-ro /pub /mnt/d/library {
-	pre {
-		import auth
-	}
-}

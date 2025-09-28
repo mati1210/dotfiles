@@ -3,7 +3,6 @@
 	admin "unix//run/caddy/admin.socket"
 	email {$ACMEMAIL}
 	persist_config off
-	order webdav before file_server
 }
 
 import /etc/caddy/snippets.d/* 
