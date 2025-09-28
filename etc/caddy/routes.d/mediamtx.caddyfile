@@ -1,17 +1,17 @@
-route /live/* {
-	uri strip_prefix /live
+import hostmatch rtc
+handle @rtc {
+	route {
+		@live `!path('*/whep*') && !method('GET', 'HOST', 'OPTIONS')`
+		respond @live "writer no writing!" 405
+		import auth
+		reverse_proxy localhost:8889
+	}
+}
 
-	@live `!path('*/whep*') && !method('GET', 'HOST', 'OPTIONS')`
-	respond @live "writer no writing!" 405
-
-	@hls `query({"hls": "yes"}) || header({"hls": "yes"}) || path('*hls*')`
-	vars proxyPort 8889
-	header @hls yes
-	vars @hls proxyPort 8888
-
-	import auth
-	reverse_proxy {
-		to localhost:{vars.proxyPort}
-		header_down Location ^/ /live/
+import hostmatch hls
+handle @hls {
+	route {
+		import auth
+		reverse_proxy localhost:8888
 	}
 }

@@ -1,0 +1,3 @@
+(hostmatch) {
+	@{args[0]} `{host}.startsWith("{args[0]}")`
+}

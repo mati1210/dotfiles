@@ -3,6 +3,10 @@
 	admin "unix//run/caddy/admin.socket"
 	email {$ACMEMAIL}
 	persist_config off
+
+	acme_dns cloudflare {env.CLOUDFLARE_TOKEN}
+	dns cloudflare {env.CLOUDFLARE_TOKEN}
+	ech {$ECH}
 }
 
 import /etc/caddy/snippets.d/* 

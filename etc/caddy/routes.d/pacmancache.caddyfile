@@ -1,4 +1,5 @@
-import fileserver /pkg /var/cache/pacman/pkg {
+import hostmatch pacmancache
+import fileserver @pacmancache /var/cache/pacman/pkg {
 	pre {
 		import empty
 	}
