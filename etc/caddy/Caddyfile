@@ -7,11 +7,12 @@
 }
 
 import /etc/caddy/snippets.d/* 
-{$HOSTS}
-log
-encode
+{$HOSTS} {
+	log
+	encode
 
-header Strict-Transport-Security "max-age=2592000"
-import /etc/caddy/routes.d/*
+	header Strict-Transport-Security "max-age=2592000"
+	import /etc/caddy/routes.d/*
 
-respond "idk man" 400
+	respond "idk man" 400
+}
