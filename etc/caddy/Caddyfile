@@ -15,8 +15,9 @@ import /etc/caddy/snippets.d/*
 		respond "{err.status_code} {err.status_text}: {err.message}"
 	}
 
-	header Strict-Transport-Security "max-age=2592000"
-	import /etc/caddy/routes.d/*
+	header Strict-Transport-Security "max-age=31550000"
+	header X-Robots-Tag "noindex, nofollow"
+	import routes.d/*.caddyfile
 
 	error "idk man" 400
 }
