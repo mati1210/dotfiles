@@ -11,8 +11,12 @@ import /etc/caddy/snippets.d/*
 	log
 	encode
 
+	handle_errors {
+		respond "{err.status_code} {err.status_text}: {err.message}"
+	}
+
 	header Strict-Transport-Security "max-age=2592000"
 	import /etc/caddy/routes.d/*
 
-	respond "idk man" 400
+	error "idk man" 400
 }
