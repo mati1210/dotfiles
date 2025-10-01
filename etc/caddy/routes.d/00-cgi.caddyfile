@@ -1,0 +1,11 @@
+@cgi {
+	path /cgi/*
+	file {
+		root {$CGIROOT}
+	}
+}
+handle @cgi {
+	cgi * {$CGIROOT}/{path} {
+		pass_env CACHE_DIRECTORY
+	}
+}
