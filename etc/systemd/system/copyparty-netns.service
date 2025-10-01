@@ -1,0 +1,16 @@
+[Unit]
+Description=setup copyparty ns
+
+[Service]
+Type=oneshot
+Environment=IF=copyparty NS=copyparty IFPFX=10.99.112
+
+ExecStartPre=-/sbin/ip netns add ${NS}
+ExecStartPre=-/sbin/ip link add ${IF} type veth peer ${IF} netns ${NS}
+
+ExecStart=ip addr replace ${IFPFX}.1/24 dev ${IF}
+ExecStart=ip -n ${NS} addr replace ${IFPFX}.2/24 dev ${IF}
+
+ExecStart=ip link set ${IF} up
+ExecStart=ip -n ${NS} link set ${IF} up
+ExecStart=ip -n ${NS} link set lo up

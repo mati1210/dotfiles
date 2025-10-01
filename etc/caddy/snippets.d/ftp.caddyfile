@@ -1,0 +1,12 @@
+(ftp) {
+	:{args[0]} {
+		route {
+			tls {
+				connection_policy {
+					alpn ftp
+				}
+			}
+			proxy 10.99.112.2:{args[0]}
+		}
+	}
+}

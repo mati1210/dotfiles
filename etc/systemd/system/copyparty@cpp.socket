@@ -1,0 +1,7 @@
+[Socket]
+ListenStream=/run/cpp.sock
+SocketUser=caddy
+SocketMode=660
+
+[Install]
+WantedBy=sockets.target

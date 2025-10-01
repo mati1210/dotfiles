@@ -1,0 +1,4 @@
+#!/bin/zsh
+printf "Content-type: text/javascript; charset=utf-8\r\n\r\n"
+
+zcat /usr/lib/python3.*/site-packages/copyparty/web/baguettebox.js.gz |sed 's+jfif+jfif|jxl+g'

@@ -1,0 +1,24 @@
+#!/usr/bin/env python
+from copyparty.__main__ import main
+from copyparty.ftpd import FtpHandler
+
+
+## FTPS patch
+def ftp_PBSZ(self, line):
+    self.respond("200 PBSZ=0")
+
+
+def ftp_PROT(self, line):
+    if line.upper() != "P":
+        self.respond("534 unencrypted data channel unsupported")
+    else:
+        self.respond("200 yeah")
+
+
+for cmd in ["PBSZ", "PROT"]:
+    FtpHandler.proto_cmds.update(
+        {cmd: {"perm": None, "auth": False, "arg": True, "help": cmd}}
+    )
+    setattr(FtpHandler, f"ftp_{cmd}", locals()[f"ftp_{cmd}"])
+
+main()
