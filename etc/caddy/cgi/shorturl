@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS urls(
     key TEXT PRIMARY KEY NOT NULL,
     url TEXT,
     subdomain TEXT,
-    path TEXT
+    path TEXT,
     code INT
 );
 PRAGMA user_version = 2;
