@@ -45,7 +45,7 @@ with sqlite3.connect(DB, uri=True) as SQL:
     SQL.row_factory = sqlite3.Row
     cur = SQL.cursor()
 
-    cur.execute("SELECT * FROM kv WHERE key = ?", (KEY,))
+    cur.execute("SELECT * FROM urls WHERE key = ?", (KEY,))
 
     res: URL = dict(cur.fetchone() or util.notfound())  # type: ignore
 
