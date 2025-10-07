@@ -1,0 +1,66 @@
+#!/usr/bin/env python
+TABLE = """
+CREATE TABLE IF NOT EXISTS urls(
+    key TEXT PRIMARY KEY NOT NULL,
+    url TEXT,
+    subdomain TEXT,
+    path TEXT
+    code INT
+);
+PRAGMA user_version = 2;
+"""
+import html
+import util
+from typing import Optional, TypedDict
+import sys
+import sqlite3
+import os
+
+
+class GenericURL(TypedDict):
+    code: Optional[int]
+
+
+class FullURL(GenericURL):
+    url: str
+
+
+class RelativeURL(GenericURL):
+    subdomain: str
+    path: str
+
+
+URL = FullURL | RelativeURL
+
+
+KEY = os.getenv("QUERY_STRING") or util.notfound()
+DB = os.getenv("SHORTURLDB") or util.err("db path not specified!")
+
+
+with sqlite3.connect(DB, uri=True) as SQL:
+    ver = SQL.execute("PRAGMA user_version").fetchone()[0]
+    if ver != 2:
+        SQL.executescript(TABLE)
+
+    SQL.row_factory = sqlite3.Row
+    cur = SQL.cursor()
+
+    cur.execute("SELECT * FROM kv WHERE key = ?", (KEY,))
+
+    res: URL = dict(cur.fetchone() or util.notfound())  # type: ignore
+
+    code = res.get("code") or 302
+
+    if not (url := res.get("url")):
+        orighost = (
+            os.getenv("SERVER_NAME") or util.err("failed to get server name!")
+        ).split(".", maxsplit=1)[1]
+
+        host = res.get("subdomain") or util.err("no host specified")
+        path = res.get("path") or ""
+        url = f"//{host}.{orighost}/{path.removeprefix("/")}"
+
+    util.sendheaders([f"Status: {code}", f"Location: {url}"])
+
+    esc = html.escape(url)
+    print(f"<a href='{esc}'>{url}</a>")

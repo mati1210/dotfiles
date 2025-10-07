@@ -1,0 +1,8 @@
+import hostmatch s
+
+handle @s {
+	rewrite * /?{file}
+	cgi * {$CGIROOT}/shorturl {
+		pass_env SHORTURLDB
+	}
+}
