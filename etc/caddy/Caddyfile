@@ -8,7 +8,7 @@
 	dns cloudflare {env.CLOUDFLARE_TOKEN}
 	ech {$ECH}
 
-	import l4/Caddyfile
+	import conf.d/Caddyfile
 }
 
 import /etc/caddy/snippets.d/* 
