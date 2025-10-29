@@ -1,0 +1,13 @@
+:853 {
+	route {
+		tls {
+			connection_policy {
+				alpn dot
+			}
+		}
+		proxy {
+			proxy_protocol v2
+			upstream 127.0.0.1:53853
+		}
+	}
+}

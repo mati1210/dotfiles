@@ -1,0 +1,8 @@
+import hostmatch dns
+handle @dns {
+	reverse_proxy 127.0.0.1:53443 {
+		transport http {
+			tls_trust_pool file /etc/unbound/cert.pem
+		}
+	}
+}
