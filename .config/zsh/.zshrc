@@ -65,9 +65,11 @@ function tar {
 functions -c tar bsdtar
 
 function pac {
+	local extra="" cmd=systemd-inhibit
+	(( $+commands[$cmd] )) && extra="$cmd --who=sleep:shutdown"
 	case $1 in
 		-Q*|-S[si]*|-F^(y)) pacman $@;;
-		*) doas pacman $@;;
+		*) doas ${=extra} pacman $@;;
 	esac
 }
 
