@@ -1,0 +1,3 @@
+#!/bin/nft -f
+add element inet main allowed_tcp { 80 }
+add element inet main allowed_any { 443 }

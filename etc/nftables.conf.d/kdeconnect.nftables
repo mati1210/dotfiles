@@ -1,2 +1,2 @@
 #!/bin/nft -f
-add rule inet main lan meta l4proto {tcp, udp} th dport 1714-1764 accept
+add element inet main allowed_any_lan { 1714-1764 }

@@ -1,5 +1,5 @@
 #!/bin/nft -f
-add rule inet main udp_chain udp dport 51820 accept
+add element inet main allowed_udp { 51820 }
 add rule inet main forward iifname "wg0" accept
 
 table inet main {
