@@ -1,7 +1,5 @@
 import hostmatch tunes
 handle @tunes {
-	redir /.cpr/baguettebox.js /cgi/fixbaguette
-	
 	reverse_proxy unix//run/cpp.sock {
 		@403 status 403
 		handle_response @403 {
