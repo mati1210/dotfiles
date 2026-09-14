@@ -1,0 +1,34 @@
+<script nonce="{{ js_nonce }}">
+     localStorage["bd_lim"] = Math.pow(2, 13)
+
+     Array.prototype.shuffle = function () {
+         let m = this.length, i;
+         while (m) {
+             i = (Math.random() * m--) >>> 0;
+             [this[m], this[i]] = [this[i], this[m]]
+         }
+         return this;
+     }
+
+     function randsort() {
+         const files = document.querySelector("#ggrid")
+
+         const arr = []
+         for (const child of files.children) {
+             arr.push(child)
+         }
+         arr.shuffle()
+         files.innerHTML = ""
+         for (const elem of arr) {
+             files.append(elem)
+         }
+     }
+     document.addEventListener('DOMContentLoaded', () => {
+         const rnd = document.createElement("a")
+         rnd.href = "#"
+         rnd.onclick = randsort
+         rnd.innerText = "random"
+
+         document.querySelector("a[s=ext]").parentNode.appendChild(rnd)
+     })
+</script>
