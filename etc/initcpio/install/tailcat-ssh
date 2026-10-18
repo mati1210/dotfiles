@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+build() {
+	local tcatdir=/etc/initcpio/tailcat unitpath=/etc/systemd/system/tailcat.service
+	add_binary tailcat
+
+	if ! [[ -e "$tcatdir/key" ]]; then
+		tailcat genkey --key="$tcatdir/key" --embed-derp-map
+	fi
+	map add_file "$tcatdir"/{key,ssh_authorized_keys}
+
+	service=(
+		"[Unit]"
+		"DefaultDependencies=no"
+		"After=network-online.target"
+		"Wants=network-online.target"
+		""
+		"[Service]"
+		"Restart=always"
+		"Environment=HOME=/root"
+		"ExecStart=/usr/bin/tailcat --verbose serve --key=$tcatdir/key --ssh-authorized-keys=$tcatdir/ssh_authorized_keys ssh"
+	)
+	printf "%s\n" "${service[@]}" | add_file - "$unitpath" 644
+	add_symlink /etc/systemd/system/sysinit.target.wants/tailcat.service "$unitpath"
+}
